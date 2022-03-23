@@ -20,19 +20,29 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void addProducts(Product product) {
         ProductEntity productEntity = new ProductEntity ();
+        Iterable<ProductEntity> productEntities = productRepository.findAll();
 
-//        Optional<SellerEntity> byId=sellerRepository.findById(product.getSellerId());
-//        if(byId.isPresent()){
-//            productEntity.setSellerProducts(byId.get());
+        int productCount = 0;
+        String productName = product.getName();
+        for(ProductEntity prod : productEntities){
+            if(productName.equals(prod.getName())){
+//                feignController.addToSeller();
+                productCount++;
+                break;
+            }
+        }
+        if(productCount==0){
             productEntity.setStock(product.getStock());
-            productEntity.setPrice(product.getPrice());
-            productEntity.setImage(product.getImage());
-            productEntity.setDetails(product.getDetails());
-            productEntity.setName(product.getName());
-            productEntity.setId(product.getId());
-            productEntity.setCategory (product.getCategory ());
-            productEntity.setSellerId (product.getSellerId ());
-            productRepository.save(productEntity);
+                productEntity.setPrice(product.getPrice());
+                productEntity.setImage(product.getImage());
+                productEntity.setDetails(product.getDetails());
+                productEntity.setName(product.getName());
+                productEntity.setId(product.getId());
+                productEntity.setCategory (product.getCategory ());
+                productEntity.setSellerId (product.getSellerId ());
+                productRepository.save(productEntity);
+        }
+
     }
 
     @Override
